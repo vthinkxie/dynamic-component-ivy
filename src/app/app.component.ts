@@ -1,10 +1,15 @@
-import { Component } from '@angular/core';
+import { Component, ɵrenderComponent as renderComponent, Injector, ɵLifecycleHooksFeature as LifecycleHooksFeature } from '@angular/core';
 
 @Component({
-  selector: 'app-root',
+  selector   : 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  styleUrls  : ['./app.component.css']
 })
 export class AppComponent {
-  title = 'dynamic-template';
+
+  constructor(private injector: Injector) {
+    import('./dynamic/dynamic.component').then(({ DynamicComponent }) => {
+      renderComponent(DynamicComponent, { injector, host: '#slot', hostFeatures: [LifecycleHooksFeature] });
+    });
+  }
 }
